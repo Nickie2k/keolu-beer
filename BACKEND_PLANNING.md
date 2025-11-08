@@ -300,9 +300,30 @@ This document outlines potential backend features using MongoDB and Express.js f
 
 ---
 
+## Current Backend Setup
+
+**Structure:**
+```
+backend/
+├── server.js        # Express server (port 3000)
+├── package.json     # Backend dependencies
+└── node_modules/    # 68 packages including Express 5.1.0
+```
+
+**Running:**
+- `npm run backend` - Start Express server
+- `npm run backend-dev` - Start in dev mode
+- Server: http://localhost:3000
+- Frontend: http://localhost:5173 (Vite)
+
+**Current Endpoint:**
+- GET `/` - Returns "Hello World!"
+
+---
+
 ## Development Steps to Get Started
 
-1. **Setup Development Environment**
+1. **Setup Development Environment** ✓ COMPLETED
    ```bash
    mkdir keolu-beer-backend
    cd keolu-beer-backend
@@ -310,6 +331,8 @@ This document outlines potential backend features using MongoDB and Express.js f
    npm install express mongoose cors dotenv
    npm install --save-dev nodemon
    ```
+   - Backend folder created with Express 5.1.0 installed
+   - Self-contained with own package.json and node_modules
 
 2. **Create MongoDB Atlas Account**
    - Sign up at mongodb.com/cloud/atlas

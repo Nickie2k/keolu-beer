@@ -1,7 +1,14 @@
-import React from "react";
-import "./ShopInfo.css";
+import React, { useState } from 'react'
+import './ShopInfo.css'
+import uberEatsIcon from '../myHeader/icons8-uber-eats-app-48.png'
+import doorDashIcon from '../myHeader/doordash.jpeg'
 
 const ShopInfo = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
+
   return (
     <div className="shop-info-container">
       <h2 className="shop-info-title">Keolu Beer Shop</h2>
@@ -14,6 +21,7 @@ const ShopInfo = () => {
         selection of fine wines, distinguished whiskies, and our signature
         collection of local and international beers
       </p>
+
       <div className="social-media-links">
         <a
           href="https://facebook.com"
@@ -58,8 +66,51 @@ const ShopInfo = () => {
           </svg>
         </a>
       </div>
-    </div>
-  );
-};
 
-export default ShopInfo;
+      <button className="buy-now-button" onClick={openModal}>
+        Buy Now
+      </button>
+
+      {isModalOpen && (
+        <div className="modal-overlay" onClick={closeModal}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={closeModal}>
+              ×
+            </button>
+            <h3 className="modal-title">Choose Your Delivery Service</h3>
+            <div className="delivery-options">
+              <a
+                href="https://www.ubereats.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="delivery-option ubereats"
+              >
+                <span className="delivery-name">UberEats</span>
+                <img
+                  src={uberEatsIcon}
+                  alt="UberEats"
+                  className="delivery-icon"
+                />
+              </a>
+              <a
+                href="https://www.doordash.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="delivery-option doordash"
+              >
+                <span className="delivery-name">DoorDash</span>
+                <img
+                  src={doorDashIcon}
+                  alt="DoorDash"
+                  className="delivery-icon"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
+export default ShopInfo

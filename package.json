@@ -9,9 +9,12 @@
     "lint": "eslint . --ext .js,.jsx --config ./config/.eslintrc.cjs",
     "preview": "vite preview",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d dist",
+    "backend": "cd backend && npm start",
+    "backend-dev": "cd backend && npm run dev"
   },
   "dependencies": {
+    "express": "^5.1.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
