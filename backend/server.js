@@ -1,46 +1,82 @@
+// SETUP STEPS:
+// 1. Install dependencies: npm install express mongoose cors dotenv
+// 2. Create a .env file in the backend folder
+// 3. Add MONGODB_URI to .env: MONGODB_URI=your_mongodb_connection_string
+// 4. Start server: node server.js (runs on port 3000 by default)
+
+// Import required packages
 const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+require('dotenv').config()
+
+// Initialize Express app
 const app = express()
+const PORT = process.env.PORT || 5000
 
-const port = 3000
+// Middleware: Enable CORS for cross-origin requests
+app.use(cors())
+// Middleware: Parse JSON request bodies
+app.use(express.json())
 
-// Users data
-const usersList = [
+// Connect to MongoDB using connection string from .env file
+const uri = process.env.MONGODB_URI
+mongoose
+  .connect(uri)
+  .then(() =>
+    console.log('MongoDB connected successfully to the "Users" database')
+  )
+  .catch((err) => console.error('MongoDB connection error:', err))
+
+// Define schema for contact form submissions
+const contactSchema = new mongoose.Schema(
   {
-    id: 1,
-    name: 'Phi Hao Tran',
-    displayName: 'Nickie T',
+    name: String,
+    email: String,
+    phonenumber: String,
+    reason: String,
+    message: String,
   },
   {
-    id: 2,
-    name: 'Le Quynh Nhu Tran',
-    displayName: 'Sarah T',
-  },
-]
-
-// Get Method
-app.get('/', (req, res) => {
-  res.status(201).send('Hello World!')
-})
-
-app.get('/api/users', (req, res) => {
-  console.log('Full usersList:', usersList)
-  console.log('Array length:', usersList.length)
-  res.json(usersList)
-})
-
-app.get('/api/users/:id', (req, res) => {
-  const parsedId = parseInt(req.params.id)
-  console.log(parsedId)
-
-  const user = usersList.find((u) => u.id === parsedId)
-
-  if (!user) {
-    return res.status(404).send({ error: 'User not found' })
+    timestamps: true, // Automatically adds createdAt and updatedAt fields
   }
+)
 
-  res.send(user)
+// Create model from schema - saves to 'contacts' collection in MongoDB
+const Contact = mongoose.model('Contact', contactSchema, 'contacts')
+
+// Root endpoint - verify server is running
+app.get('/', (req, res) => {
+  res.send('Express server is running.')
 })
 
-app.listen(port, () => {
-  console.log(`Your Backend is running at: http://localhost:${port}`)
+// POST endpoint - save contact form data to MongoDB
+app.post('/api/contact', async (req, res) => {
+  try {
+    // Extract form fields from request body
+    const { name, email, phonenumber, reason, message } = req.body
+
+    // Create new contact document
+    const newContact = new Contact({
+      name,
+      email,
+      phonenumber,
+      reason,
+      message,
+    })
+
+    // Save to MongoDB
+    const savedContact = await newContact.save()
+
+    console.log('Contact saved:', savedContact)
+    res.status(201).json({ msg: 'Message saved!', contact: savedContact })
+  } catch (err) {
+    console.error('Error saving contact:', err)
+    res.status(500).json({ error: 'Server error.' })
+  }
+})
+
+// Start server
+app.listen(PORT, () => {
+  console.log(`Server is running on port: ${PORT}`)
 })
