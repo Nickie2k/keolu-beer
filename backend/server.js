@@ -12,7 +12,7 @@ require('dotenv').config()
 
 // Initialize Express app
 const app = express()
-const PORT = process.env.PORT || 5000
+const PORT = process.env.PORT || 3000
 
 // Middleware: Enable CORS for cross-origin requests
 app.use(cors())
@@ -20,9 +20,8 @@ app.use(cors())
 app.use(express.json())
 
 // Connect to MongoDB using connection string from .env file
-const uri = process.env.MONGODB_URI
 mongoose
-  .connect(uri)
+  .connect(process.env.MONGODB_URI)
   .then(() =>
     console.log('MongoDB connected successfully to the "Users" database')
   )
@@ -79,4 +78,29 @@ app.post('/api/contact', async (req, res) => {
 // Start server
 app.listen(PORT, () => {
   console.log(`Server is running on port: ${PORT}`)
+})
+
+// For Subscriptions
+
+const subsSchema = new mongoose.Schema({
+  subsEmail: String,
+})
+
+const Subs = mongoose.model('Subs', subsSchema, 'subs')
+
+app.post('/api/subs', async (req, res) => {
+  try {
+    const { subsEmail } = req.body
+
+    const newSubs = new Subs({
+      subsEmail,
+    })
+
+    const savedSubs = await newSubs.save()
+    console.log('New Subs: ', savedSubs)
+    res.status(201).json({ msg: 'Subscription saved!', subscriber: savedSubs })
+  } catch (err) {
+    console.error('Cannot save new subscriber: ', err)
+    res.status(500).json({ error: 'Server error.' })
+  }
 })

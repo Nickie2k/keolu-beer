@@ -1,20 +1,47 @@
-import React, { useState } from "react";
-import "./EmailBanner.css";
-import visaLogo from "./visa (2).png";
-import mastercardLogo from "./card.png";
-import applePayLogo from "./apple-pay.png";
-import amexLogo from "./amex.png";
+import React, { useState } from 'react'
+import './EmailBanner.css'
+import visaLogo from './visa (2).png'
+import mastercardLogo from './card.png'
+import applePayLogo from './apple-pay.png'
+import amexLogo from './amex.png'
 
 const EmailBanner = () => {
-  const [email, setEmail] = useState("");
+  // Submit email
+  const [email, setEmail] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [message, setMessage] = useState('')
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
     if (email) {
-      alert(`Thank you for subscribing with: ${email}`);
-      setEmail("");
+      setIsSubmitting(true)
+      setMessage('')
+
+      try {
+        const response = await fetch('http://localhost:3000/api/subs', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ subsEmail: email }),
+        })
+
+        const data = await response.json()
+
+        if (response.ok) {
+          setMessage('Thank you for subscribing!')
+          setEmail('')
+        } else {
+          setMessage('Subscription failed. Please try again.')
+        }
+      } catch (error) {
+        console.error('Error submitting subscription:', error)
+        setMessage('Network error. Please try again.')
+      } finally {
+        setIsSubmitting(false)
+      }
     }
-  };
+  }
 
   return (
     <footer className="email-banner-container">
@@ -45,11 +72,13 @@ const EmailBanner = () => {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
+            disabled={isSubmitting}
           />
-          <button type="submit" className="subscribe-button">
-            Subscribe
+          <button type="submit" className="subscribe-button" disabled={isSubmitting}>
+            {isSubmitting ? 'Subscribing...' : 'Subscribe'}
           </button>
         </form>
+        {message && <p className="subscription-message">{message}</p>}
       </div>
 
       {/* Payment Methods Section */}
@@ -60,10 +89,18 @@ const EmailBanner = () => {
             <img src={visaLogo} alt="Visa" className="payment-icon" />
           </div>
           <div className="payment-card">
-            <img src={mastercardLogo} alt="Mastercard" className="payment-icon" />
+            <img
+              src={mastercardLogo}
+              alt="Mastercard"
+              className="payment-icon"
+            />
           </div>
           <div className="payment-card">
-            <img src={amexLogo} alt="American Express" className="payment-icon" />
+            <img
+              src={amexLogo}
+              alt="American Express"
+              className="payment-icon"
+            />
           </div>
           <div className="payment-card">
             <img src={applePayLogo} alt="Apple Pay" className="payment-icon" />
@@ -129,7 +166,7 @@ const EmailBanner = () => {
         </p>
       </div>
     </footer>
-  );
-};
+  )
+}
 
-export default EmailBanner;
+export default EmailBanner

@@ -1,24 +1,81 @@
 // useState is a React Hook that lets you add state to functional components
 // State is data that changes over time and causes the component to re-render when updated
-import React, { useState } from "react";
-import "./myHeader.css";
-import uberEatsIcon from "./icons8-uber-eats-app-48.png";
-import doorDashIcon from "./doordash.jpeg";
+import React, { useState } from 'react'
+import './myHeader.css'
+import uberEatsIcon from './icons8-uber-eats-app-48.png'
+import doorDashIcon from './doordash.jpeg'
 
 const MyHeader = () => {
-  // useState Hook syntax: const [stateVariable, setterFunction] = useState(initialValue);
-  // - isModalOpen: the current state value (true or false)
-  // - setIsModalOpen: function to update the state (calling it triggers a re-render)
-  // - useState(false): sets the initial value to false (modal closed by default)
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  // Modal
+  const [isModalOpen, setIsModalOpen] = useState(false)
+  const openModal = () => setIsModalOpen(true)
+  const closeModal = () => setIsModalOpen(false)
 
-  // Helper function to open the modal
-  // Calls setIsModalOpen(true) which updates the state and re-renders the component
-  const openModal = () => setIsModalOpen(true);
+  // Form state - each field gets its own state variable
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    phonenumber: '',
+    reason: '',
+    message: '',
+  })
 
-  // Helper function to close the modal
-  // Calls setIsModalOpen(false) which updates the state and re-renders the component
-  const closeModal = () => setIsModalOpen(false);
+  // State for form submission status
+  const [submitStatus, setSubmitStatus] = useState('')
+  const [isSubmitting, setIsSubmitting] = useState(false)
+
+  // Handle input changes - updates formData when user types
+  const handleInputChange = (e) => {
+    const { name, value } = e.target
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  // Handle form submission
+  const handleSubmit = async (e) => {
+    e.preventDefault() // Prevents page refresh
+    setIsSubmitting(true)
+    setSubmitStatus('')
+
+    try {
+      // Send POST request to backend API
+      const response = await fetch('http://localhost:3000/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitStatus('success')
+        // Reset form after successful submission
+        setFormData({
+          name: '',
+          email: '',
+          phonenumber: '',
+          reason: '',
+          message: '',
+        })
+        // Close modal after 2 seconds
+        setTimeout(() => {
+          closeModal()
+          setSubmitStatus('')
+        }, 4000)
+      } else {
+        setSubmitStatus('error')
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error)
+      setSubmitStatus('error')
+    } finally {
+      setIsSubmitting(false)
+    }
+  }
 
   return (
     <>
@@ -61,25 +118,64 @@ const MyHeader = () => {
               &times;
             </button>
             <h2>Contact Us</h2>
-            <form className="contact-form">
+            {submitStatus === 'success' && (
+              <div className="status-message success-message">
+                Message sent successfully! We'll get back to you soon.
+              </div>
+            )}
+            {submitStatus === 'error' && (
+              <div className="status-message error-message">
+                Failed to send message. Please try again.
+              </div>
+            )}
+            <form className="contact-form" onSubmit={handleSubmit}>
               <div className="form-group">
                 <label htmlFor="name">Name:</label>
-                <input type="text" id="name" name="name" required />
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  value={formData.name}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="email">Email:</label>
-                <input type="email" id="email" name="email" required />
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="phone">Phone Number:</label>
-                <input type="tel" id="phone" name="phone" required />
+                <input
+                  type="tel"
+                  id="phone"
+                  name="phonenumber"
+                  value={formData.phonenumber}
+                  onChange={handleInputChange}
+                  required
+                />
               </div>
               <div className="form-group">
                 <label htmlFor="reason">Reason for Contact:</label>
-                <select id="reason" name="reason" required>
+                <select
+                  id="reason"
+                  name="reason"
+                  value={formData.reason}
+                  onChange={handleInputChange}
+                  required
+                >
                   <option value="">Select a reason...</option>
                   <option value="stock-inquiry">Stock Inquiry</option>
-                  <option value="general-information">General Information</option>
+                  <option value="general-information">
+                    General Information
+                  </option>
                   <option value="career">Career</option>
                 </select>
               </div>
@@ -89,18 +185,24 @@ const MyHeader = () => {
                   id="message"
                   name="message"
                   rows="5"
+                  value={formData.message}
+                  onChange={handleInputChange}
                   required
                 ></textarea>
               </div>
-              <button type="submit" className="submit-btn">
-                Send Message
+              <button
+                type="submit"
+                className="submit-btn"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? 'Sending...' : 'Send Message'}
               </button>
             </form>
           </div>
         </div>
       )}
     </>
-  );
-};
+  )
+}
 
-export default MyHeader;
+export default MyHeader
