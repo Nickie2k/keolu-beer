@@ -1,0 +1,329 @@
+/* ── Overlay / Backdrop ──────────────────────────────────────────────────── */
+
+.pp-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 8888;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(10, 8, 4, 0.88);
+  padding: 16px;
+  animation: ppFadeIn 0.25s ease forwards;
+}
+
+/* ── Dialog Container ───────────────────────────────────────────────────── */
+
+.pp-dialog {
+  background: #1e1c18;
+  border: 1px solid rgba(249, 109, 0, 0.3);
+  border-radius: 10px;
+  width: 100%;
+  max-width: 680px;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.75),
+    0 0 0 1px rgba(249, 109, 0, 0.06);
+  animation: ppSlideUp 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  outline: none;
+}
+
+/* ── Header ─────────────────────────────────────────────────────────────── */
+
+.pp-header {
+  position: relative;
+  padding: 32px 36px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  flex-shrink: 0;
+}
+
+.pp-brand {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.35em;
+  color: #f96d00;
+  text-transform: uppercase;
+  margin: 0 0 10px 0;
+  opacity: 0.85;
+}
+
+.pp-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.9rem;
+  font-weight: 700;
+  color: #f5f0e8;
+  margin: 0 0 6px 0;
+  line-height: 1.15;
+}
+
+.pp-effective {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-size: 0.78rem;
+  color: #5c5448;
+  margin: 0;
+  letter-spacing: 0.03em;
+}
+
+.pp-close-btn {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: 1px solid rgba(156, 144, 128, 0.3);
+  color: #9c9080;
+  font-size: 1rem;
+  line-height: 1;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+}
+
+.pp-close-btn:hover {
+  color: #f5f0e8;
+  border-color: rgba(245, 240, 232, 0.3);
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.pp-close-btn:focus-visible {
+  outline: 2px solid #f96d00;
+  outline-offset: 3px;
+}
+
+/* ── Scrollable Body ────────────────────────────────────────────────────── */
+
+.pp-body {
+  overflow-y: auto;
+  padding: 28px 36px;
+  flex: 1;
+  scroll-behavior: smooth;
+
+  /* Custom scrollbar — Webkit */
+  scrollbar-width: thin;
+  scrollbar-color: rgba(249, 109, 0, 0.35) transparent;
+}
+
+.pp-body::-webkit-scrollbar {
+  width: 5px;
+}
+
+.pp-body::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.pp-body::-webkit-scrollbar-thumb {
+  background-color: rgba(249, 109, 0, 0.35);
+  border-radius: 3px;
+}
+
+/* ── Sections ───────────────────────────────────────────────────────────── */
+
+.pp-section {
+  margin-bottom: 28px;
+}
+
+.pp-section:last-child {
+  margin-bottom: 0;
+}
+
+.pp-section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #f96d00;
+  margin: 0 0 10px 0;
+  letter-spacing: 0.01em;
+}
+
+.pp-text {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #c2b9aa;
+  line-height: 1.75;
+  margin: 0 0 10px 0;
+}
+
+.pp-text:last-child {
+  margin-bottom: 0;
+}
+
+.pp-text strong {
+  color: #f5f0e8;
+  font-weight: 600;
+}
+
+.pp-list {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #c2b9aa;
+  line-height: 1.75;
+  margin: 8px 0 10px 0;
+  padding-left: 22px;
+}
+
+.pp-list li {
+  margin-bottom: 4px;
+}
+
+.pp-link {
+  color: #f96d00;
+  text-decoration: none;
+  border-bottom: 1px solid rgba(249, 109, 0, 0.35);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.pp-link:hover {
+  color: #ffaa66;
+  border-bottom-color: rgba(249, 109, 0, 0.7);
+}
+
+/* ── Contact Block ──────────────────────────────────────────────────────── */
+
+.pp-contact-block {
+  background: rgba(249, 109, 0, 0.06);
+  border: 1px solid rgba(249, 109, 0, 0.2);
+  border-radius: 6px;
+  padding: 16px 20px;
+  margin-top: 10px;
+}
+
+.pp-contact-line {
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  color: #c2b9aa;
+  margin: 0 0 4px 0;
+  line-height: 1.6;
+}
+
+.pp-contact-line:last-child {
+  margin-bottom: 0;
+}
+
+/* ── Footer / Close Button ──────────────────────────────────────────────── */
+
+.pp-footer {
+  padding: 18px 36px 24px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  justify-content: flex-end;
+  flex-shrink: 0;
+}
+
+.pp-close-footer-btn {
+  background: #f96d00;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-family: 'Montserrat', system-ui, -apple-system, sans-serif;
+  font-size: 0.88rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 12px 32px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(249, 109, 0, 0.35);
+  transition: opacity 0.15s ease, transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.pp-close-footer-btn:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(249, 109, 0, 0.5);
+}
+
+.pp-close-footer-btn:active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.pp-close-footer-btn:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ── Keyframes ──────────────────────────────────────────────────────────── */
+
+@keyframes ppFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ppSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Mobile ─────────────────────────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .pp-overlay {
+    padding: 0;
+    align-items: flex-end;
+  }
+
+  .pp-dialog {
+    border-radius: 12px 12px 0 0;
+    max-height: 92vh;
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+  }
+
+  .pp-header {
+    padding: 24px 20px 18px;
+  }
+
+  .pp-title {
+    font-size: 1.55rem;
+    padding-right: 36px;
+  }
+
+  .pp-body {
+    padding: 20px 20px;
+  }
+
+  .pp-footer {
+    padding: 14px 20px 20px;
+  }
+
+  .pp-close-footer-btn {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 375px) {
+  .pp-title {
+    font-size: 1.35rem;
+  }
+
+  .pp-text,
+  .pp-list {
+    font-size: 0.84rem;
+  }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .pp-overlay,
+  .pp-dialog {
+    animation: none;
+  }
+
+  .pp-close-footer-btn {
+    transition: none;
+  }
+}

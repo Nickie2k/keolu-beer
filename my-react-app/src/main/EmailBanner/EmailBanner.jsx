@@ -5,7 +5,7 @@ import mastercardLogo from './card.png'
 import applePayLogo from './apple-pay.png'
 import amexLogo from './amex.png'
 
-const EmailBanner = () => {
+const EmailBanner = ({ onPrivacyClick }) => {
   // Submit email
   const [email, setEmail] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -158,16 +158,18 @@ const EmailBanner = () => {
             >
               Get Directions
             </a>
+            <button className="footer-link footer-privacy-btn" onClick={onPrivacyClick}>
+              Privacy Policy
+            </button>
           </div>
         </div>
       </div>
-
-      {/* Copyright Section */}
+      {/* Footer Bottom */}
       <div className="footer-bottom">
         <p className="copyright-text">
-          © {new Date().getFullYear()} Keolu Beer. All rights reserved. | Your
-          Paradise in Every Sip 🍺
+          © {new Date().getFullYear()} Keolu Beer. All rights reserved.
         </p>
+        <p className="footer-21-notice">Must be 21+ to purchase alcohol. Please drink responsibly.</p>
       </div>
     </footer>
   )

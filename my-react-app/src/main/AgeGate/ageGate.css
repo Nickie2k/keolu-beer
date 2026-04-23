@@ -1,0 +1,221 @@
+/* ── Age Gate Overlay ──────────────────────────────────────────────────── */
+
+.age-gate-overlay {
+  position: fixed;
+  inset: 0;                       /* top/right/bottom/left: 0 */
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Dark, semi-translucent backdrop with a warm amber tint */
+  background: rgba(20, 14, 6, 0.96);
+
+  /* Fade in on mount */
+  animation: ageGateFadeIn 0.4s ease forwards;
+}
+
+.age-gate-overlay.age-gate-leaving {
+  animation: ageGateFadeOut 0.55s ease forwards;
+  pointer-events: none;
+}
+
+/* ── Card ──────────────────────────────────────────────────────────────── */
+
+.age-gate-card {
+  background: #1e1c18;
+  border: 1px solid rgba(249, 109, 0, 0.35);
+  border-radius: 12px;
+  padding: 48px 40px 36px;
+  max-width: 440px;
+  width: 90%;
+  text-align: center;
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.7),
+    0 0 0 1px rgba(249, 109, 0, 0.08);
+
+  /* Slide up on mount */
+  animation: ageGateSlideUp 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* ── Logo / Brand ──────────────────────────────────────────────────────── */
+
+.age-gate-logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.35em;
+  color: #f96d00;
+  text-transform: uppercase;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+/* ── Heading ───────────────────────────────────────────────────────────── */
+
+.age-gate-heading {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #f5f0e8;
+  margin: 0 0 16px;
+  line-height: 1.15;
+}
+
+/* ── Body copy ─────────────────────────────────────────────────────────── */
+
+.age-gate-body {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 0.95rem;
+  color: #c2b9aa;
+  line-height: 1.65;
+  margin: 0 0 24px;
+}
+
+.age-gate-body strong {
+  color: #f5f0e8;
+  font-weight: 600;
+}
+
+/* ── Question ──────────────────────────────────────────────────────────── */
+
+.age-gate-question {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #f5f0e8;
+  margin: 0 0 28px;
+  letter-spacing: 0.02em;
+}
+
+/* ── Action buttons ────────────────────────────────────────────────────── */
+
+.age-gate-actions {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  margin-bottom: 28px;
+}
+
+.age-gate-btn {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 6px;
+  padding: 14px 32px;
+  cursor: pointer;
+  transition: transform 0.15s ease, opacity 0.15s ease, box-shadow 0.15s ease;
+  min-width: 130px;
+}
+
+/* Yes button — orange fill */
+.age-gate-btn--yes {
+  background: #f96d00;
+  color: #ffffff;
+  box-shadow: 0 4px 16px rgba(249, 109, 0, 0.4);
+}
+
+.age-gate-btn--yes:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 22px rgba(249, 109, 0, 0.55);
+}
+
+.age-gate-btn--yes:active {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* No button — ghost/outline */
+.age-gate-btn--no {
+  background: transparent;
+  color: #9c9080;
+  border: 1px solid rgba(156, 144, 128, 0.4);
+}
+
+.age-gate-btn--no:hover {
+  color: #f5f0e8;
+  border-color: rgba(245, 240, 232, 0.35);
+  transform: translateY(-2px);
+}
+
+.age-gate-btn--no:active {
+  transform: translateY(0);
+}
+
+/* ── Disclaimer ────────────────────────────────────────────────────────── */
+
+.age-gate-disclaimer {
+  font-family: 'Montserrat', system-ui, sans-serif;
+  font-size: 0.72rem;
+  color: #5c5448;
+  margin: 0;
+  letter-spacing: 0.02em;
+}
+
+/* ── Keyframes ─────────────────────────────────────────────────────────── */
+
+@keyframes ageGateFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes ageGateFadeOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+@keyframes ageGateSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ── Mobile ────────────────────────────────────────────────────────────── */
+
+@media (max-width: 480px) {
+  .age-gate-card {
+    padding: 40px 24px 28px;
+  }
+
+  .age-gate-heading {
+    font-size: 1.9rem;
+  }
+
+  .age-gate-actions {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .age-gate-btn {
+    width: 100%;
+    min-width: unset;
+    padding: 14px 20px;
+  }
+}
+
+@media (max-width: 375px) {
+  .age-gate-heading {
+    font-size: 1.7rem;
+  }
+
+  .age-gate-body {
+    font-size: 0.88rem;
+  }
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .age-gate-overlay,
+  .age-gate-card {
+    animation: none;
+  }
+}

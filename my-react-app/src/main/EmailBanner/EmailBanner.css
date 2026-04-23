@@ -362,11 +362,26 @@
 .copyright-text {
   color: #ffffff;
   font-size: 14px;
-  margin: 0;
+  margin: 0 0 6px 0;
   font-family:
     system-ui,
     -apple-system,
     sans-serif;
+}
+
+.footer-21-notice {
+  color: #aaa;
+  font-size: 12px;
+  margin: 0;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.footer-privacy-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
 }
 
 /* Responsive Footer */
