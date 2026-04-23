@@ -1,5 +1,6 @@
 node_modules/
-    venv/
-    *.log
-    build/
-    
+venv/
+*.log
+build/
+.env
+.env.*

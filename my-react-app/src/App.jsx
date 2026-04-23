@@ -9,6 +9,7 @@ import BeachPic from "./main/Beach/bCocktail.jsx";
 import MyStore from "./main/StoreHour/storeHour.jsx";
 
 function App() {
+  
   return (
     <div>
       <Header />

@@ -74,8 +74,12 @@ const EmailBanner = () => {
             required
             disabled={isSubmitting}
           />
-          <button type="submit" className="subscribe-button" disabled={isSubmitting}>
-            {isSubmitting ? 'Subscribing...' : 'Subscribe'}
+          <button
+            type="submit"
+            className={`subscribe-button${isSubmitting ? ' subscribing' : ''}`}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? <span className="spinner" /> : 'Subscribe'}
           </button>
         </form>
         {message && <p className="subscription-message">{message}</p>}
