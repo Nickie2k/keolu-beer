@@ -272,11 +272,13 @@
   .pp-overlay {
     padding: 0;
     align-items: flex-end;
+    justify-content: center;
   }
 
   .pp-dialog {
     border-radius: 12px 12px 0 0;
     max-height: 92vh;
+    width: 100%;
     border-left: none;
     border-right: none;
     border-bottom: none;
@@ -284,19 +286,28 @@
 
   .pp-header {
     padding: 24px 20px 18px;
+    text-align: center;
+  }
+
+  .pp-close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
   }
 
   .pp-title {
     font-size: 1.55rem;
-    padding-right: 36px;
+    padding-right: 0;
   }
 
   .pp-body {
     padding: 20px 20px;
+    text-align: left;
   }
 
   .pp-footer {
     padding: 14px 20px 20px;
+    justify-content: center;
   }
 
   .pp-close-footer-btn {

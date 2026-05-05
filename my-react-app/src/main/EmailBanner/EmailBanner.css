@@ -381,7 +381,8 @@
   border: none;
   padding: 0;
   cursor: pointer;
-  text-align: left;
+  text-align: inherit;
+  width: 100%;
 }
 
 /* Responsive Footer */
